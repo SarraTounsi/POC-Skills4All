@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Car index{% endblock %}
+
+
+{% block body %}
+    <h1>Home page</h1>
+
+<div class="d-inline">
+    <h5 class="text-info">Search cars by name</h5>
+
+    {{ form_start(searchForm) }}
+    {{ form_row(searchForm.search) }}
+    <button type="submit" class="btn btn-outline-primary">Rechercher</button>
+
+    {{ form_end(searchForm) }}   
+    <h5 class="text-info">Search cars by category</h5>
+
+    {{ form_start(categoryForm) }}
+    {{ form_row(categoryForm.category) }}
+    <button type="submit" class="btn btn-outline-primary">Rechercher</button>
+    {{ form_end(categoryForm) }}
+</div>
+    {% if pagination is empty %}
+        <p>Aucun résultat.</p>
+    {% else %} 
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>NbDoors</th>
+                <th>NbSeats</th>
+                <th>Cost</th>
+                <th>Name</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for car in pagination %}
+            <tr class="table-light">
+                <td>{{ car.nbDoors }}</td>
+                <td>{{ car.nbSeats }}</td>
+                <td>{{ car.cost }}</td>
+                <td>{{ car.name }}</td>
+                <td>{{ car.category.name }}</td>
+
+               
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    <div class="pagination">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+     {% endif %} 
+
+{% endblock %}
